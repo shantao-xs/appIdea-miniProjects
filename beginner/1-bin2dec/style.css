@@ -1,0 +1,78 @@
+* {
+    font-family: sans-serif;
+}
+.container,footer{
+    /*container之于body*/
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%,20%);
+    width:50%;
+
+    /*对子元素*/
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*怎么让元素之间有间隔？margin。上下边距10，左右0*/
+h1{
+    margin:60px 0; 
+    font-size: 40px;
+    height: 50px;
+}
+h1 .highlight{
+    background-color: black;
+    color:white;
+}
+/* *用ctrl+/可以一键注释*/
+.inputs{
+    margin-bottom: 80px;
+    /* border: red 1px solid; */ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#switchConvert{
+    margin-right: 10px;
+}
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: peru;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/*满足鼠标悬停在#switchConvert元素时，就会显示tooltip的元素属性*/
+/* *使用了:hover伪元素*/
+#switchConvert:hover .tooltip {
+    display: block;
+}
+
+
+.input-1{
+    width:600px;
+    height:45px;
+    box-sizing: border-box; /*可以让元素的高度包括边框和内边距，从而更准确地控制元素的大小*/
+}
+.btn{
+    cursor: pointer;
+    background-color: transparent;
+    border:none;
+}
+.btn-1{
+    height:45px;
+    width:100px;
+    background-color: gainsboro;
+    border:1px solid grey;
+}
+
+footer{
+    bottom:20px;
+    
+}

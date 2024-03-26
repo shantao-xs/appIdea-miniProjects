@@ -1,0 +1,194 @@
+/*页面布局*/
+html{
+    background-color:hsla(0,100%,50%,1);
+    background-image:
+    radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsla(189,100%,56%,1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(355,100%,93%,1) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
+    height:100vh; 
+    background-size: cover;
+}
+body{
+    text-align: center;
+    color: white;
+    font-family: 'helvetica neue', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+
+header{
+    margin: 60px 0;
+}
+
+.container{
+    display: flex;
+}
+
+
+
+.display{
+    flex-grow: 2;
+    margin-right: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* controller之间的空间分配和间距 */
+.display-control{
+    margin: 0;
+    padding:0;
+
+    display: flex;
+    flex-direction: column;
+    width:700px;
+}
+.top-row, .bottom-row {
+    display: flex;
+   justify-content: center;
+}
+.top-row label,
+.bottom-row label{
+    flex:1;
+    text-align: left;
+}
+.top-row input,
+.bottom-row input{
+    flex:1.5;
+}
+
+#top-left,
+#bottom-left{
+    margin-right: 30px;
+}
+
+#top-right,
+#bottom-right{
+    margin-left: 30px;
+}
+
+
+
+#rcorners {
+    border-top-left-radius: var(--top-left);
+    border-top-right-radius: var(--top-right);
+    border-bottom-left-radius: var(--bottom-left);
+    border-bottom-right-radius: var(--bottom-right);
+    background: #ffc600;
+    margin:20px 0 0 0; 
+    border:whitesmoke 3px solid;
+    width: 700px;
+    height: 300px;  
+    transition: opacity 0.3s;
+    }
+    
+.download{
+    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: ffe156;
+    border-radius: 10px;
+    /* border: 1px solid gold; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.download h4{
+    margin:20px 0;
+
+}
+
+.download p{
+    margin:0;
+    font-size: 20px;
+}
+
+.download button{
+    margin:30px 0 10px 0;
+    width: 130px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #3777ff;
+    border:none;
+    border-radius: 10px;
+    cursor:pointer;
+}
+
+.copytext{
+    margin-top: auto;
+    height: 150px;
+    width:300px;
+    background-color: white;
+    border: #555 2px solid;
+    border-radius: 10px;
+  }
+
+  #showcopy{
+    color: #555;
+    width: 280px;
+    word-wrap: break-word;
+
+    padding: 8px;
+    font-size: 16px;
+    text-align: left;
+  }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: -30%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 15px;
+  }
+  
+  /* 工具箱悬浮对话框（带小箭头） */
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    transform: rotate(180deg);
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 40%;
+    font-size: 16px;
+}

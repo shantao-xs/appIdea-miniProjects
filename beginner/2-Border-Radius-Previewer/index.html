@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Border Radius Previewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Change CSS Border Radius</h1>
+    </header>
+    
+    <div class="container">
+        <div class="display">
+            <div class="display-control">
+                <div class="top-row">
+                    <label for="top-left">top-left:</label>
+                    <input type="range" class="controller" id="top-left" name="top-left" min="0" max="200" value="0" data-sizing="px">
+
+                    <label for="top-left">top-right:</label>
+                    <input type="range" class="controller" id="top-right" name="top-right" min="0" max="200" value="0" data-sizing="px">
+                </div>
+                <div class="bottom-row">
+                    <label for="top-left">bottom-left:</label>
+                    <input type="range" class="controller" id="bottom-left" name="bottom-left" min="0" max="200" value="0" data-sizing="px">
+    
+                    <label for="top-left">bottom-right:</label>
+                    <input type="range" class="controller" id="bottom-right" name="bottom-right" min="0" max="200" value="0" data-sizing="px">
+                    
+                </div>
+            </div>
+            <div class="display-box">
+                <p id="rcorners"></p>
+            </div>
+        </div>
+
+        <div class="download">
+            <h4>Download</h4>
+            <p>Copy, paste and go.</p>
+            <div class="tooltip">
+                <button onclick="handleCopy(event)" onmouseleave="outFunc()" >Copy text</button>
+                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+            </div> 
+            <div class="copytext">
+                <p id="showcopy">Copy and your css border radius style will show here</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Tao Shan's mini project. Updated on 2024/03/26.</p>
+    </footer>
+    
+<script src="scripts-practice0326.js"></script>
+</body>
+</html>

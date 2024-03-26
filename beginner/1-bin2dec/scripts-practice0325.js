@@ -16,15 +16,26 @@ const regexDec = /\d+/;
 input.placeholder = 'please enter 0 or 1 here (up to 8 digits)';
 //! 注意防止默认刷新！这个问题卡了好久 
 //! 注意toggle时改变标题颜色：这里在改innerHTML的时候，直接改内部正文，不要再嵌套一个h1，不然会打乱结构
+// *如果想用onclick，对于要接收event的元素，需要在html里传入参数event - onclick(func(event))
+//! addeventlistener 和 onclick区别？
+/**addeventlistener 和 onclick区别: addeventlistener可以对同一元素绑定多个事件按顺序依次执行，但onclick只能绑定一个；前者对所有DOM元素有效而不仅仅是对html元素
+ * 精简写法（如果除了绑定事件外不需要对这个元素进行其他的处理）：
+ * document.getElementById("idName").addEventListener('click',func)
+ * document.getElementById("idName").onclick = func
+ * */ 
+//! queryselector 和 getelementby 的区别? getelementby获得动态集合，会随着文档的改变而改，queryselector是静态的，特别体现在【ul-li结构有更新时】;queryselector 需要接收css选择符，getelementby要搭配id,tagname,classname使用，对应获取id/标签名/类名的元素，且直接写名字而不用加比如是('.className' '#idName')
+
+
 function toggleConvert(e){
     e.preventDefault();
+    console.log('change');
     const heading = document.querySelector('#heading');
     const headingHL = document.querySelector('#headingHL');
     isBinToDec=!isBinToDec;
     input.placeholder = isBinToDec ? 'please enter 0 or 1 here (up to 8 digits)' : 'please enter number here (0-255)';
     heading.innerHTML = isBinToDec ? `<span id="headingHL" class="highlight">Bin</span>2Dec Calculator` : `<span id="headingHL" class="highlight">Dec</span>2Bin Calculator`;
 }
-switchConvert.addEventListener('click',toggleConvert);
+
 
 //! 注意，虽然isBinToDec是一个全局变量，但是在函数里，必须先传入它才能够正确调用它的值！
 function handleSubmit(e){

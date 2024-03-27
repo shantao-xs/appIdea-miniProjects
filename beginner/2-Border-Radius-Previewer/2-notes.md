@@ -16,3 +16,5 @@
 2. 在click时，把文本更新为想要的值（比如copyText.value)
 3. 在mouseout后，刷新文本为原来的文本
 4. **tooltip的相对位置问题？**
+
+    /*2.使用变量属性var(--xxx)来更改css变量*/

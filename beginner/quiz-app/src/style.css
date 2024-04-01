@@ -1,0 +1,13 @@
+body{
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
+
+.custom-bold{
+    font-family:'Franklin Gothic Medium', sans-serif;
+    color:blue;
+}
+
+.quiz-block{
+    border: 1px solid gold;
+}

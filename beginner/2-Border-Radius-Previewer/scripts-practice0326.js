@@ -16,7 +16,7 @@ function handleCopy(e) {
     let borderRadius = {
         topLeft:elementStyle.borderTopLeftRadius,
         topRight:elementStyle.borderTopRightRadius,
-        bottomLeft:elementStyle.borderBottomRightRadius,
+        bottomLeft:elementStyle.borderBottomLeftRadius,
         bottomRight:elementStyle.borderBottomRightRadius,
     }
      //复制到剪贴板，把js对象转为字符串格式：JSON.stringfy

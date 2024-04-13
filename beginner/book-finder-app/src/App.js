@@ -15,7 +15,6 @@ const App = () => {
   const [startIndex,setStartIndex] = useState(0);
   const [isLoad,setLoad] = useState(false);
   const [didSearch,setDid] = useState(false);
-  const [isSearching,setIsSearching]= useState(false);
   const maxResultsPerPage = 15;
   
   const API_KEY=GoogleBooksApiKey;
@@ -40,6 +39,8 @@ const App = () => {
     }
   }
 
+
+
   //每次点击search button就fetch一次，fetch完所有数据后再传入resultlist组件开始render
   async function fetchData() {
       try {
@@ -49,51 +50,52 @@ const App = () => {
           const ifSelectLanguage = handleSearchLanguage()
           const searchURL = `https://www.googleapis.com/books/v1/volumes?q=${encodedSearchTerms}&startIndex=${startIndex}&maxResults=${maxResultsPerPage}&key=${API_KEY}${ifSelectLanguage}`;
           
-          setTimeout(async()=>{
-            const response = await fetch(searchURL);
-            // if (!response.ok) {
-            //     throw new Error('Network response was not ok');
-            // }
-            const data = await response.json();
-  
-            //异步函数会在调用setSearchResults(data.items)不会立即更新searchResults的值，从而导致在<ResultList searchResults={searchResults}/>传入参数时传入的时空值。
-            if (!data.items) {
-              return;
+         
+          const response = await fetch(searchURL);
+          // if (!response.ok) {
+          //     throw new Error('Network response was not ok');
+          // }
+          const data = await response.json();
+
+          //异步函数会在调用setSearchResults(data.items)不会立即更新searchResults的值，从而导致在<ResultList searchResults={searchResults}/>传入参数时传入的时空值。
+          if (!data.items) {
+            return;
+          }
+          console.log(data.items);
+
+          const booksInfos = data.items.map((book,index) =>{
+            
+            //注意如果没有ISBN的话，在用.find前就需要排除掉
+            let ISBN = 'not found'
+            const ISBN_13 = book.volumeInfo.industryIdentifiers ? book.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13') : null;
+            const ISBN_10 = book.volumeInfo.industryIdentifiers ? book.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_10') : null;
+            if(ISBN_13){
+              ISBN=ISBN_13.identifier;
+            }else if(ISBN_10){
+              ISBN = ISBN_10.identifier;
             }
 
-            const booksInfos = data.items.map((book,index) =>{
-              
-              //注意如果没有ISBN的话，在用.find前就需要排除掉
-              let ISBN = 'not found'
-              const ISBN_13 = book.volumeInfo.industryIdentifiers ? book.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_13') : null;
-              const ISBN_10 = book.volumeInfo.industryIdentifiers ? book.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN_10') : null;
-              if(ISBN_13){
-                ISBN=ISBN_13.identifier;
-              }else if(ISBN_10){
-                ISBN = ISBN_10.identifier;
-              }
-  
-              //如果没有图的话，用一张404的图代替
-              //在一个jsx表达式内部，已经用{}括起来了，就不需要再用{defaultPage}，这样只会传递一个object而不是正确的路径
-              return({
-                index: startIndex + index,
-                title: book.volumeInfo.title,
-                authors: book.volumeInfo.authors ? book.volumeInfo.authors : 'N/A',
-                publishedDate: book.volumeInfo.publishedDate,
-                ISBN: ISBN, 
-                categories: book.volumeInfo.categories ? book.volumeInfo.categories : 'N/A',
-                language: book.volumeInfo.language,
-                rating: book.volumeInfo.averageRating ? book.volumeInfo.averageRating : 'no rating yet',
-                ratingsCount: book.volumeInfo.ratingsCount,
-                description:book.volumeInfo.description,
-                image:book.volumeInfo.imageLinks?.thumbnail || defaultPage,
-                link:book.volumeInfo.infoLink,
-              })
-              }
-            )
-            setSearchResults(booksInfos);
-            setLoad(false);
-          },500);
+            //如果没有图的话，用一张404的图代替
+            //在一个jsx表达式内部，已经用{}括起来了，就不需要再用{defaultPage}，这样只会传递一个object而不是正确的路径
+            return({
+              index: startIndex + index,
+              title: book.volumeInfo.title,
+              authors: book.volumeInfo.authors ? book.volumeInfo.authors : 'N/A',
+              publishedDate: book.volumeInfo.publishedDate,
+              ISBN: ISBN, 
+              categories: book.volumeInfo.categories ? book.volumeInfo.categories : 'N/A',
+              language: book.volumeInfo.language,
+              rating: book.volumeInfo.averageRating ? book.volumeInfo.averageRating : 'no rating yet',
+              ratingsCount: book.volumeInfo.ratingsCount,
+              description:book.volumeInfo.description,
+              image:book.volumeInfo.imageLinks?.thumbnail || defaultPage,
+              link:book.volumeInfo.infoLink,
+            })
+            }
+          )
+          setSearchResults(booksInfos);
+          setLoad(false);
+          
           
       } catch (error) {
           console.error('There was a problem with your fetch operation:', error);
@@ -112,7 +114,6 @@ const App = () => {
     fetchData();
     setLoad(true);
     setDid(true);
-    setIsSearching(true);
   }
 
   //每次startIndex变化（即使用了go to next/previous时，执行一次fetchdata）
@@ -131,18 +132,26 @@ const App = () => {
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  //注意这里需要执行一次{handleSearch()}操作，来渲染结果
-  //返回的是一个jsx元素<ResultList/>，而不是执行search的功能。每次render都会新建一个googlebooksclient对象，而不是返回search的list。
   return (
     <div>
       
       <Header />
-      <div className={isSearching?'mt-2':'mt-60'}>
-        <Search setContent={setContent} setType={setType} setLanguage={setLanguage} handleSearch={handleSearch} />
+      <div className={didSearch?'mt-2':'mt-60'}>
+        <Search 
+          setContent={setContent} setType={setType} setLanguage={setLanguage} handleSearch={handleSearch} 
+        />
       </div>
       
-      {!isLoad && didSearch && <ResultList searchResults={searchResults} startIndex={startIndex} goToPreviousPage={goToPreviousPage} goToNextPage={goToNextPage}/>}
-      {isLoad &&  <LoadingPage />}
+      {!isLoad && didSearch && 
+        <ResultList 
+          searchResults={searchResults} startIndex={startIndex} goToPreviousPage={goToPreviousPage} goToNextPage={goToNextPage}
+        />
+      }
+
+      {isLoad &&  
+        <LoadingPage />
+      }
+
       <Footer/>
     </div>
   );

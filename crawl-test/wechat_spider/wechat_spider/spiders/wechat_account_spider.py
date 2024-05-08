@@ -2,7 +2,8 @@ import requests.utils
 import scrapy
 import json
 import logging
-
+import random
+import time
 
 from ..items import  WechatSpiderItem, WechatImageItem
 
@@ -59,8 +60,8 @@ class Wechat_accout_spider(scrapy.Spider):
         pyResult = json.loads(jsResult)
         if 'app_msg_list' in pyResult:
             articlesList = pyResult['app_msg_list']
-            for article in articlesList:
-                link = article['link']
+            for i in range(4):
+                link = articlesList[i]['link']
                 yield response.follow(link, self.parseDetail)
         else:
             logging.error("No 'app_msg_list' found in the response!")
@@ -70,7 +71,9 @@ class Wechat_accout_spider(scrapy.Spider):
         each_page_counts = 4
         max_count = pyResult['app_msg_cnt']
 
-        for page in range(9):
+        for page in range(20):
+            delay = random.randint(30, 60)
+            time.sleep(delay)
             startIndex = int(each_page_counts * page)
             if(startIndex>max_count-1):
                 logging.info("No new articles!")

@@ -1,7 +1,5 @@
-//用useState来存储要用的变量（input文本，search的类型），
 //! 因为usestate异步，所以不能通过console.log看到即时的效果，要监测的话就用useEffect
 // 数据获取操作一般要放在层级高的组件里，app负责获取数据，resultlist只负责展示搜索结果
-//input：怎么回车也能触发sumbit的效果？
 
 const Search = (props) => {
     const {setContent,setType,setLanguage,handleSearch}=props;

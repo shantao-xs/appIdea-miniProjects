@@ -1,0 +1,2 @@
+<div style="border-bottom: solid 1px #000">
+    入院记录(h3)
